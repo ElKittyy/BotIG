@@ -2,7 +2,5 @@ services:
   - type: worker
     name: instagram-bot
     runtime: python
-    repo: https://github.com/TU_USUARIO/instagram-bot
-    branch: main
     buildCommand: pip install -r requirements.txt
     startCommand: python main.py
