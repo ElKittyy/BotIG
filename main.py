@@ -26,7 +26,7 @@ except Exception as e:
     exit()
 
 # URL del Reel objetivo
-reel_url = "https://www.instagram.com/reel/DMYp8dBS7QQ/?igsh=eDQwbDJmN2E0d3Nq"
+reel_url = "https://www.instagram.com/reel/DMYp8dBS7QQ/?igsh=MTJwN3MydTh1a3c1aA=="
 
 try:
     media_id = cl.media_pk_from_url(reel_url)
