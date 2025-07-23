@@ -35,7 +35,7 @@ except Exception as e:
     exit()
 
 # Comentario a realizar
-comentario = "@fiorellajazmin1 @manuel.chiarlone @enzovaccaro4"
+comentario = "@camiloposik1 @manuelchiarlone @enzovaccaro4"
 
 # Tiempo límite: 17 días desde ahora
 fin = datetime.now() + timedelta(days=17)
