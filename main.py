@@ -2,36 +2,56 @@ from instagrapi import Client
 import time
 import random
 from datetime import datetime, timedelta
+import os
 
-# Tus credenciales de Instagram
-username = 'fiorellajazmin222'
-password = 'CamiLo222'
+# Si vas a usar variables de entorno locales (opcional)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # Si no se usa .env, no hay problema
 
-# Conexión al cliente de Instagram
+# ✅ Credenciales desde entorno o directamente
+username = os.getenv("IG_USERNAME", "tu_usuario_aqui")
+password = os.getenv("IG_PASSWORD", "tu_contraseña_aqui")
+
+# Conexión a Instagram
 cl = Client()
-cl.login(username, password)
 
-# URL del Reel donde vas a comentar
+try:
+    cl.login(username, password)
+    print("[+] Sesión iniciada correctamente.")
+except Exception as e:
+    print(f"[ERROR] Falló el login: {e}")
+    exit()
+
+# URL del Reel objetivo
 reel_url = "https://www.instagram.com/reel/DMYp8dBS7QQ/?igsh=eDQwbDJmN2E0d3Nq"
 
-# Obtener el media ID (identificador de la publicación)
-media_id = cl.media_pk_from_url(reel_url)
+try:
+    media_id = cl.media_pk_from_url(reel_url)
+except Exception as e:
+    print(f"[ERROR] No se pudo obtener media_id desde la URL: {e}")
+    exit()
 
-# Comentario que vas a hacer
-comentario = "@camiloposik1 @manuelchiarlone @enzovaccaro4"
+# Comentario a realizar
+comentario = "@fiorellajazmin1 @manuel.chiarlone @enzovaccaro4"
 
-# Definir el tiempo de finalización: 17 días desde ahora
+# Tiempo límite: 17 días desde ahora
 fin = datetime.now() + timedelta(days=17)
 
-# Bucle para comentar cada minuto (aproximadamente, con random)
+print(f"[INFO] Bot activo hasta: {fin.strftime('%Y-%m-%d %H:%M:%S')}")
+print("[INFO] Comenzando bucle de comentarios...")
+
+# Bucle principal
 while datetime.now() < fin:
     try:
         cl.media_comment(media_id, comentario)
-        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Comentario enviado.")
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Comentario enviado correctamente.")
     except Exception as e:
-        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Error al comentar: {e}")
+        print(f"[ERROR] Comentario fallido: {e}")
     
-    # Espera aleatoria entre 60 y 80 segundos
+    # Espera aleatoria entre comentarios
     espera = random.randint(60, 80)
-    print(f"Esperando {espera} segundos para el próximo comentario...")
+    print(f"[INFO] Esperando {espera} segundos...")
     time.sleep(espera)
